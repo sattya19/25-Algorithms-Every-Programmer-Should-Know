@@ -1,17 +1,17 @@
-public class HeapSort {
+public class heapSort {
     public static void main(String[] args) {
         int[] arr = { 12, 11, 13, 5, 6, 7 };
 
         System.out.println("Original Array:");
         printArray(arr);
 
-        heapSort(arr);
+        HeapSort(arr);
 
         System.out.println("\nSorted Array:");
         printArray(arr);
     }
 
-    public static void heapSort(int[] arr) {
+    public static void HeapSort(int[] arr) {
         int n = arr.length;
 
         // Build a max heap
