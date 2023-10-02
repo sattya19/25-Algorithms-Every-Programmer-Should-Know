@@ -1,44 +1,76 @@
-// L : Left Sub Array , R : Right Sub Array , A : Array
+public class MergeSort1 {
+   public static void main(String[] args) {
+      int[] arr = { 12, 11, 13, 5, 6, 7 };
 
-merge(L, R, A)
-{
-    nL = length(L)    // Size of Left Sub Array
-    nR = length(R)    // Size of Right Sub Array
+      System.out.println("Original Array:");
+      printArray(arr);
 
-    i = j = k = 0
+      mergeSort(arr, 0, arr.length - 1);
 
-    while(i<nL && j<nR)
-    {
-      /* When both i and j are valid i.e. when both the sub arrays have elements to insert in A */
-      
-       if(L[i] <= R[j])
-       {
-          A[k] = L[i]
-          k = k+1
-          i = i+1
-       }
-       else
-       {
-          A[k] = R[j]
-          k = k+1
-          j = j+1
-       }
-    }
+      System.out.println("\nSorted Array:");
+      printArray(arr);
+   }
 
-    // Adding Remaining elements from left sub array to array A
-    while(i<nL)
-    {
-       A[k] = L[i]
-       i = i+1
-       k = k+1
-    }
+   public static void mergeSort(int[] arr, int left, int right) {
+      if (left < right) {
+         int mid = (left + right) / 2;
 
-    // Adding Remaining elements from right sub array to array A
-    while(j<nR)
-    {
-       A[k] = R[j]
-       j = j+1
-       k = k+1
-    }
+         // Sort the first and second halves
+         mergeSort(arr, left, mid);
+         mergeSort(arr, mid + 1, right);
+
+         // Merge the sorted halves
+         merge(arr, left, mid, right);
+      }
+   }
+
+   public static void merge(int[] arr, int left, int mid, int right) {
+      int n1 = mid - left + 1;
+      int n2 = right - mid;
+
+      int[] L = new int[n1];
+      int[] R = new int[n2];
+
+      // Copy data to temp arrays L[] and R[]
+      for (int i = 0; i < n1; i++) {
+         L[i] = arr[left + i];
+      }
+      for (int j = 0; j < n2; j++) {
+         R[j] = arr[mid + 1 + j];
+      }
+
+      // Merge the temp arrays back into arr[left..right]
+      int i = 0, j = 0, k = left;
+      while (i < n1 && j < n2) {
+         if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+         } else {
+            arr[k] = R[j];
+            j++;
+         }
+         k++;
+      }
+
+      // Copy remaining elements of L[] if any
+      while (i < n1) {
+         arr[k] = L[i];
+         i++;
+         k++;
+      }
+
+      // Copy remaining elements of R[] if any
+      while (j < n2) {
+         arr[k] = R[j];
+         j++;
+         k++;
+      }
+   }
+
+   public static void printArray(int[] arr) {
+      for (int value : arr) {
+         System.out.print(value + " ");
+      }
+      System.out.println();
+   }
 }
-/*In merge sort, we divide the array into two (nearly) equal halves and solve them recursively using merge sort only*/
